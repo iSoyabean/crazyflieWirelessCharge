@@ -12,9 +12,11 @@ class FlyPosture(Enum):
 
     charging = 4  # 正在充电
 
-    avoiding = 5  # 正在避障
+    avoiding_flying = 5  # 正在飞行避障
 
-    over = 6  # 完成全部飞行任务
+    avoiding_hovering = 6  # 正在悬停避障
+
+    over = 7  # 完成全部飞行任务
 
 
 class CFSequence:
@@ -66,7 +68,10 @@ class CFStatus:
         self._current_battery = current_battery
         self._status_lock = status_lock
         self._current_posture = current_posture
-        self._current_end_point = current_end_point
+        if current_end_point == None:
+            self._current_end_point = [0, 0, 0]
+        else:
+            self._current_end_point = current_end_point
 
     def __getattr__(self, item):
         if item == 'uri':
